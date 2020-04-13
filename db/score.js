@@ -7,7 +7,4 @@ var con = mysql.createConnection({
     database : 'roulette'
 });
 
-con.connect((err) => {
-    if (err) throw err;
-    console.log("DB connected");
-});
+module.exports.con = con;

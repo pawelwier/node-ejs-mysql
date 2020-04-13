@@ -1,10 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-// var controller = require('../controllers/main_game');
+const controller = require('../controller/main_controller');
 
-router.get('/', (req, res) => {
-    res.render('index');
-})
+router.get('/', controller.getMain);
+router.post('/change', controller.postChange);
 
 module.exports = router;
