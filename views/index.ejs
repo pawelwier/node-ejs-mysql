@@ -13,7 +13,16 @@
         <% } %>
             </div>
     </div>
-    Nowy wynik:
+    <br>
+    Dodaj usera:
+    <form action='/change' method="POST">
+        <input type='text' name="insertUserName" placeholder="imie">
+        <br>
+        <input type='text' name='insertUserScore' placeholder="wynik">
+        <input type='submit'>
+    </form>
+    <br>
+    Edytuj wynik:
     <form action='/change' method="POST">
         <select name="nameChangeScore">
             <% for (let x of userScoreArray) {%>
@@ -22,14 +31,20 @@
             <% } %>
                 </option>
         </select>
-        <input type='text' name='scoreOverwrite'>
+        <input type='text' name='scoreOverwrite' placeholder="wynik">
         <input type='submit'>
     </form>
     <br>
-    <!-- Dodaj wynik:
+    Usun usera:
     <form action='/change' method="POST">
-        <input type='text' name='addHundredScore'>
+        <select name="deleteUser">
+            <% for (let x of userScoreArray) {%>
+                <option>
+            <%= `${x.user_id}. ${x.username}` %>
+            <% } %>
+                </option>
+        </select>
         <input type='submit'>
-    </form> -->
+    </form>
 </body>
 </html>
