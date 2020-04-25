@@ -6,5 +6,6 @@ const controller = require('../controller/main_controller');
 router.get('/', controller.getMain);
 router.get('/:id', controller.getUserPage);
 router.post('/change', controller.postChange);
+router.post('/game/:id', controller.postResult);
 
 module.exports = router;

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="/js/user_login.js" defer></script>
+    <title>Login</title>
+    <div id="zxcv" style='font-weight: bold;font-size: 1.4em;'><%= selectedUser.username %>
+    </div>
+    <form action="/game/<%= `${selectedUser.user_id}` %>" method="POST" >
+        <label>haslo:</label>
+        <input type='text' id='pass' name='pass'/>
+        <button type='submit'>Loguj</button>
+    </form>
+    <div>
+        <%= incorrect == false ? '' : 'Niepoprawne haslo' %>
+    </div>
+</head>
+<body>
+    
+</body>
+</html>

@@ -65,5 +65,29 @@ exports.postChange = async (req, res) => {
 }
 
 exports.getUserPage = (req, res) => {
-    res.send(`Your id: ${req.params.id}`);
+    sqlQuery = `SELECT * FROM user_score WHERE user_id=${req.params.id}`;
+
+    con.query(sqlQuery, (err, row) => {
+        res.render('user_login', {
+            selectedUser : row[0],
+            incorrect  : false
+        });
+    })   
+}
+
+exports.postResult = (req, res) => {
+    sqlQuery = `SELECT * FROM user_score WHERE user_id=${req.params.id}`;
+
+    con.query(sqlQuery, (err, row) => {
+        let isPassCorrect = req.body.pass === row[0].password ? true : false;
+        if (isPassCorrect) {
+            res.render('main_game');
+        } else {
+            res.render('user_login', {
+                selectedUser : row[0],
+                incorrect  : true
+            });
+        }
+    })
+
 }
