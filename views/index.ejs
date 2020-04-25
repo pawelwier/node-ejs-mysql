@@ -6,15 +6,18 @@
     <title>Document</title>
 </head>
 <body>
+    <strong>Kim grasz?</strong>
     <div>
         <% for (let x of userScoreArray) {%>
             <div>
-        <%= `User: ${x.username}, Score: ${x.score}\n` %>
+        <a href="/<%= `${x.user_id}` %>">
+            <%= `${x.username}`%></a>
+        <%= ` wynik: ${x.score}\n` %>
         <% } %>
             </div>
     </div>
     <br>
-    Dodaj usera:
+    <strong>Dodaj usera:</strong>
     <form action='/change' method="POST">
         <input type='text' name="insertUserName" placeholder="imie">
         <br>
@@ -22,7 +25,7 @@
         <input type='submit'>
     </form>
     <br>
-    Edytuj wynik:
+    <strong>Edytuj wynik:</strong>
     <form action='/change' method="POST">
         <select name="nameChangeScore">
             <% for (let x of userScoreArray) {%>
@@ -35,7 +38,7 @@
         <input type='submit'>
     </form>
     <br>
-    Usun usera:
+    <strong>Usun usera:</strong>
     <form action='/change' method="POST">
         <select name="deleteUser">
             <% for (let x of userScoreArray) {%>

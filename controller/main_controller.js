@@ -63,3 +63,7 @@ exports.postChange = async (req, res) => {
         res.render('change' );
 
 }
+
+exports.getUserPage = (req, res) => {
+    res.send(`Your id: ${req.params.id}`);
+}
