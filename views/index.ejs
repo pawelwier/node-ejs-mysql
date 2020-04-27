@@ -49,5 +49,18 @@
         </select>
         <input type='submit'>
     </form>
+    <br>
+    <strong>Zmien haslo:</strong>
+    <form action='/change' method="POST">
+        <select name="changePassword">
+            <% for (let x of userScoreArray) {%>
+                <option>
+            <%= `${x.user_id}. ${x.username}` %>
+            <% } %>
+                </option>
+        </select>
+        <input type='text' name='newPassword' placeholder="nowe haslo">
+        <input type='submit'>
+    </form>
 </body>
 </html>

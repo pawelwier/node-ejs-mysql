@@ -2,10 +2,10 @@ const mysql = require('../db/score');
 
 const con = mysql.con;
 
-exports.getMain = async (req, res) => {
+exports.getMain = (req, res) => {
 
     let allResultsArray = [];
-    await con.query('SELECT * FROM user_score', (err, rows) => {
+    con.query('SELECT * FROM user_score', (err, rows) => {
         if (err) throw err;
 
         for (var i = 0; i < rows.length; i++) {
@@ -23,6 +23,40 @@ exports.getMain = async (req, res) => {
 
 }
 
+function changePassFunction(user, pass) {
+    let userIdUpdate = user.substr(0, user.indexOf('.'));
+        sqlQuery = `UPDATE user_score SET password = ${pass} WHERE user_id = ${userIdUpdate}`;
+        con.query(sqlQuery, (err, res) => {
+            console.log(`Pass for ${userIdUpdate} changed`)
+        })
+}
+
+function deleteUserFunction(user) {
+    let userIdUpdate = user.substr(0, user.indexOf('.'));
+    let sqlQuery = `DELETE FROM user_score WHERE user_id = ${userIdUpdate}`;
+    con.query(sqlQuery, (err, res) => {
+        console.log(`${user} deleted`)
+    })
+}
+
+function changeScoreFunction(user, score) {
+    let userIdUpdate = user.substr(0, user.indexOf('.'));
+    let sqlQuery = `UPDATE user_score SET score = ${parseInt(score)} WHERE user_id = ${parseInt(userIdUpdate)}`;
+    con.query(sqlQuery, (err, res) =>{
+        console.log(`${score} set for ${user}`);
+    });
+}
+
+function newUserFunction(user, score) {
+    let insertObject = [user, parseInt(score), 1234];
+
+    let sqlQuery = `INSERT INTO user_score (username, score, password) VALUES (?,?,?)`;
+    con.query(sqlQuery, insertObject, (err, res) =>{
+        if (err) throw err;
+            console.log(`New user: ${user}, with score: ${score}`);
+        });
+}
+
 exports.postChange = async (req, res) => {
     
     let newScore = (req.body.scoreOverwrite) ? req.body.scoreOverwrite.toString() : null;
@@ -30,37 +64,26 @@ exports.postChange = async (req, res) => {
     let deleteUser = (req.body.deleteUser) ? req.body.deleteUser.toString() : null;
     let insertUserName = (req.body.insertUserName) ? req.body.insertUserName.toString() : null;
     let insertUserScore = (req.body.insertUserScore) ? parseInt(req.body.insertUserScore) : null;
+    let changePassword = (req.body.changePassword) ? req.body.changePassword.toString() : null;
+    let newPassword = (req.body.newPassword) ? req.body.newPassword.toString() : null;
     
-    let userIdUpdate, sqlQuery;
-
     if (insertUserName && insertUserScore) {
-
-        let insertObject = [insertUserName, insertUserScore];
-
-        sqlQuery = `INSERT INTO user_score (username, score) VALUES (?,?)`;
-        con.query(sqlQuery, insertObject, (err, res) =>{
-            if (err) throw err;
-            console.log(`New user: ${insertUserName}, with score: ${insertUserScore}`);
-            });
+        newUserFunction(insertUserName, insertUserScore);
     }
 
-    if (newScore && nameChangeScore) {
-        userIdUpdate = nameChangeScore.substr(0, nameChangeScore.indexOf('.'));
-        sqlQuery = `UPDATE user_score SET score = ${newScore} WHERE user_id = ${userIdUpdate}`;
-        con.query(sqlQuery, (err, res) =>{
-            console.log(`${newScore} set for ${nameChangeScore}`);
-            });
+    if (nameChangeScore && newScore) {
+        changeScoreFunction(nameChangeScore, newScore);
     }
 
     if (deleteUser) {
-        userIdUpdate = deleteUser.substr(0, deleteUser.indexOf('.'));
-        sqlQuery = `DELETE FROM user_score WHERE user_id = ${userIdUpdate}`;
-        con.query(sqlQuery, (err, res) => {
-            console.log(`${deleteUser} deleted`)
-        })
+        deleteUserFunction(deleteUser);
+    }
+
+    if (changePassword && newPassword) {
+        changePassFunction(changePassword, newPassword);
     }
     
-        res.render('change' );
+    res.render('change' );
 
 }
 
