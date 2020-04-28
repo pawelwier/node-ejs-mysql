@@ -46,9 +46,60 @@
                 </td>
             <% }} %>
         </tr>
-
-    
     </table>
+    <div>
+        Wylosowano: 
+        <div id="printRoll">_</div>
+    </div>
+    <br>
+    <input id="colorBid" class="inputs" />
+    <select id="colorInput" name="colorInput">
+      <option value="empty">- wybierz -</option>
+      <option value="Czarny"> Czarny</option>
+      <option value="Czerwony"> Czerwony</option>
+    </select>
+    <span>kolor (1:1)</span>
+    <br>
+    <input id="evenBid" class="inputs" />
+    <select id="evenInput" name="evenInput">
+      <option value="empty">- wybierz -</option>
+      <option value="true"> Parzyste</option>
+      <option value="false"> Nieparzyste</option>
+    </select>
+    <span>parzyste/nieparzyste (1:1)</span>
+    <br>
+    <input id="dozenBid" class="inputs" />
+    <select id="dozenInput" name="dozenInput">
+      <option value="empty">- wybierz -</option>
+      <option value="0"> 1 - 12</option>
+      <option value="1"> 13 - 24</option>
+      <option value="2"> 25 - 36</option>
+    </select>
+    <span>tuziny (2:1)</span>
+    <br>
+
+    <input id="columnBid" class="inputs" />
+    <select id="columnInput" name="columnInput">
+        <option value="empty">- wybierz -</option>
+    <% for (let col of arrColumnSelect)  { %>
+        <option value="<%= col.index %>">
+            <%= col.val %>
+        </option>
+    <% } %>
+
+    </select>
+    <span>kolumna (11:1)</span>
+
+    <button id="roll">Krecimy</button>
+    <button id="clearBets">Wyczysc</button>
+
+    <div>Masz $: 
+        <span id="credit"></span>
+    </div>
+    <div class="arrData">
+        <div id="arrColors"><%= arrColors%></div>
+        <div id="arrNumbers"><%= arrNumbers%></div>
+    </div>
 
 </body>
 </html>
