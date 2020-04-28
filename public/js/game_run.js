@@ -5,9 +5,9 @@ var arrColors = strColors.split(',');
 var arrNumbers = strNumbers.split(',');
 
 var rollResult, rollColorDisplay;
-var startCash = 100;
-document.getElementById('credit').textContent = startCash;
 var credit = parseInt(document.getElementById('credit').textContent);
+
+document.getElementById('finalCredit').style.display = 'none';
 
 showFieldColors();
 
@@ -22,6 +22,7 @@ document.getElementById('roll').addEventListener('click', () => {
     placeBets(rollColorDisplay);
     
     document.getElementById('credit').textContent = credit;
+    document.getElementById('finalCredit').value = credit;
     setTimeout(() =>{if (credit == 0) {
         alert('Braklo pieniedzy');
     }}, 100);
@@ -31,6 +32,11 @@ document.getElementById('roll').addEventListener('click', () => {
 document.getElementById('clearBets').addEventListener('click', () => {
     clearBets();
 });
+
+document.getElementById('finishGame').addEventListener('click', () => {
+    console.log('kaniec')
+});
+
 
 function getRollDetails(x) {
     var colorDisplay = '';

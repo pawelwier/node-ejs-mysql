@@ -6,6 +6,10 @@
     <title>Ruletka</title>
 </head>
 <body>
+    <div>
+        <%= userName%>
+    </div>
+    <br>
     <table id="numBoard">
         <tr>
             <% for (let i = 1; i<13; i++) { %>
@@ -89,17 +93,23 @@
 
     </select>
     <span>kolumna (11:1)</span>
-
+    <br>
     <button id="roll">Krecimy</button>
     <button id="clearBets">Wyczysc</button>
 
     <div>Masz $: 
-        <span id="credit"></span>
+        <div id="credit">
+            <%= userCredit %>
+        </div>
     </div>
     <div class="arrData">
         <div id="arrColors"><%= arrColors%></div>
         <div id="arrNumbers"><%= arrNumbers%></div>
     </div>
-
+    <br>
+    <form action="/change/<%= `${userId}` %>" method="POST">
+        <input name="finalCredit" type="text" id="finalCredit" />
+        <button type="submit" id="finishGame">Koniec ide do domu</button>
+    </form>
 </body>
 </html>

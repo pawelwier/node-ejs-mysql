@@ -27,7 +27,7 @@ function changePassFunction(user, pass) {
     let userIdUpdate = user.substr(0, user.indexOf('.'));
         sqlQuery = `UPDATE user_score SET password = ${pass} WHERE user_id = ${userIdUpdate}`;
         con.query(sqlQuery, (err, res) => {
-            console.log(`Pass for ${userIdUpdate} changed`)
+            console.log(`Pass for ${userIdUpdate} changed to ${pass}`)
         })
 }
 
@@ -58,6 +58,7 @@ function newUserFunction(user, score) {
 }
 
 exports.postChange = async (req, res) => {
+    console.log('x')
     
     let newScore = (req.body.scoreOverwrite) ? req.body.scoreOverwrite.toString() : null;
     let nameChangeScore = (req.body.nameChangeScore) ? req.body.nameChangeScore.toString() : null;
@@ -98,23 +99,6 @@ exports.getUserPage = (req, res) => {
     })   
 }
 
-// exports.postResult = (req, res) => {
-//     sqlQuery = `SELECT * FROM user_score WHERE user_id=${req.params.id}`;
-
-//     con.query(sqlQuery, (err, row) => {
-//         let isPassCorrect = req.body.pass === row[0].password ? true : false;
-//         if (isPassCorrect) {
-//             res.render('main_game');
-//         } else {
-//             res.render('user_login', {
-//                 selectedUser : row[0],
-//                 incorrect  : true
-//             });
-//         }
-//     })
-
-// }
-
 function Field (val, col) {
     this.val = val;
     this.col = col;
@@ -150,8 +134,6 @@ while (countColumn < 13) {
     countColumn++;
 }
 
-// var db = require('../data/user_db');/
-
 exports.postResult = (req, res) => {
     sqlQuery = `SELECT * FROM user_score WHERE user_id=${req.params.id}`;
 
@@ -163,7 +145,10 @@ exports.postResult = (req, res) => {
                 fieldArr : fieldArr,
                 arrNumbers : arrNumbers,
                 arrColors : arrColors,
-                arrColumnSelect : arrColumnSelect
+                arrColumnSelect : arrColumnSelect,
+                userName : row[0].username,
+                userCredit : row[0].score,
+                userId : row[0].user_id
                 
             });
         } else {
@@ -173,5 +158,24 @@ exports.postResult = (req, res) => {
             });
         }
     })
+
+}
+
+exports.postMainParam = (req, res) => {
+    console.log('y')
+    console.log(req.body.finalCredit);
+
+    if (!req.body.finalCredit) {
+        res.render('change');
+        return;
+    }
+
+    let sqlQuery = `UPDATE user_score SET score = ${parseInt(req.body.finalCredit)} WHERE user_id = ${parseInt(req.params.id)}`;
+    con.query(sqlQuery, (err, res) =>{
+        console.log(`${req.body.finalCredit} set for ${req.params.id}`);
+    });
+
+
+    res.render('change')
 
 }
