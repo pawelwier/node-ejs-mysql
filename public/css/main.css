@@ -1,0 +1,29 @@
+#numBoard {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.arrData {
+    display: none;
+}
+
+table td {
+    width:23px;
+    text-align: center;
+}
+
+.inputs {
+    width:40px;
+}
+
+table th {
+    font-size: 0.5em;
+}
+
+#userName {
+    font-size: 1.3em;
+}
+
+.exportInputs {
+    display: none;
+}
