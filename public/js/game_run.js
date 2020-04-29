@@ -33,11 +33,6 @@ document.getElementById('clearBets').addEventListener('click', () => {
     clearBets();
 });
 
-document.getElementById('finishGame').addEventListener('click', () => {
-    console.log('kaniec')
-});
-
-
 function getRollDetails(x) {
     var colorDisplay = '';
     for(var i = 0; i < arrColors.length; i++) {
